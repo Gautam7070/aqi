@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Air Quality | Real-time Insights</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="container reveal-animate">
+        <h1>Air Quality Dashboard</h1>
+
+        <!-- Search Section -->
+        <div class="search-box">
+            <input type="text" id="cityInput" placeholder="Search for a city..." spellcheck="false"
+                autocomplete="off" />
+            <button onclick="getAQI()">Check AQI</button>
+        </div>
+
+        <!-- Status Indicators -->
+        <div id="loading" class="loading hidden">Analyzing air quality data...</div>
+        <div id="error" class="error hidden"></div>
+
+        <!-- Main Results -->
+        <div id="aqiCard" class="card hidden stagger-item">
+            <h2 id="cityName">City Name</h2>
+            <div class="aqi-value"><span id="aqiValue">000</span></div>
+            <p id="aqiCategory">Environmental Status</p>
+        </div>
+
+        <!-- Recommendations -->
+        <div id="healthAlert" class="alert hidden stagger-item"></div>
+
+        <!-- Data Grid -->
+        <div class="table-container stagger-item">
+            <table id="pollutantTable" class="hidden">
+                <thead>
+                    <tr>
+                        <th>Pollutant</th>
+                        <th>Concentration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PM2.5</td>
+                        <td id="pm25">--</td>
+                    </tr>
+                    <tr>
+                        <td>PM10</td>
+                        <td id="pm10">--</td>
+                    </tr>
+                    <tr>
+                        <td>CO (mg/m³)</td>
+                        <td id="co">--</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="charts stagger-item">
+            <canvas id="pmChart" class="hidden"></canvas>
+            <canvas id="gasChart" class="hidden"></canvas>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
