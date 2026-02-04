@@ -1,7 +1,7 @@
 let pmChart;
 let gasChart;
 
-const API_URL = "http://127.0.0.1:8000/air-quality";
+const API_URL = "https://aqi-8jok.onrender.com/";
 
 // Dynamic Chart defaults based on theme
 function updateChartDefaults() {
