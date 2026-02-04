@@ -33,6 +33,10 @@ app.add_middleware(
 def root():
     return {"status": "Backend running successfully"}
 
+@app.get("/healthz")
+def healthz():
+    return {"status": "ok"}
+
 # -------------------------
 # AQI Endpoint
 # -------------------------
