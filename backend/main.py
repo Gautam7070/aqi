@@ -1,5 +1,7 @@
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 from services.air_quality import (
     get_lat_lon,
@@ -8,9 +10,14 @@ from services.air_quality import (
     health_recommendations
 )
 
+# -------------------------
+# App Initialization
+# -------------------------
 app = FastAPI(title="Air Quality API")
 
-# ✅ Enable CORS
+# -------------------------
+# Enable CORS
+# -------------------------
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Replace with frontend URL in production
@@ -19,7 +26,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# -------------------------
+# Root Health Check (IMPORTANT for Render)
+# -------------------------
+@app.get("/")
+def root():
+    return {"status": "Backend running successfully"}
 
+# -------------------------
+# AQI Endpoint
+# -------------------------
 @app.get("/air-quality")
 def air_quality(city: str):
     # 1️⃣ Get coordinates
@@ -44,7 +60,7 @@ def air_quality(city: str):
     # 4️⃣ Health recommendations
     health = health_recommendations(us_aqi)
 
-    # 5️⃣ Response
+    # 5️⃣ Final response
     return {
         "city": city.capitalize(),
         "aqi": us_aqi,
@@ -56,3 +72,13 @@ def air_quality(city: str):
         },
         "health_recommendations": health["recommendations"]
     }
+
+# -------------------------
+# Render-Compatible Startup
+# -------------------------
+if __name__ == "__main__":
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8000))
+    )
